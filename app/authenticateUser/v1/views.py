@@ -50,10 +50,3 @@ def login(email):
         response = {"status": False, "message": "API error: " + str(e)}
     return jsonify(response), 500
 
-
-@app.route("/")
-@jwt_required()
-def hello():
-    url = "https://www.google.com"
-    res = requests.get(url)
-    return json.dumps(res.text)
