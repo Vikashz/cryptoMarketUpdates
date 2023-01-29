@@ -4,6 +4,7 @@ from app.constants import pre_url
 import json
 from bson import ObjectId
 from app import mongo
+from app.authenticateUser.v1.business import signup
 
 
 
@@ -76,7 +77,7 @@ def test_valid_user_logs_in(populate_test_user):
     assert data["message"] == "Valid User"
 
 
-def test_invalid_user_logs_in(populate_test_user):
+def test_invalid_user_logs_in():
     """
     Test invalid user can not log in
     """
@@ -89,3 +90,15 @@ def test_invalid_user_logs_in(populate_test_user):
     data = res.json()
     assert data["status"] == False
     assert data["message"] == "User not found, Make sure that the credentials used are correct"
+
+
+def test_create_new_api_user_business(delete_test_user):
+    """
+    Test business function to check if new user can sign up
+    """
+    payload = {"email": "vicky@mailinator.com",
+               "password": "lol123",
+               "first_name": "vicky",
+               "last_name": "K"}
+    res = signup(payload)
+    assert isinstance(res, ObjectId) == True
