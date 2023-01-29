@@ -12,6 +12,7 @@ mongo = mongo[db_name]
 
 
 from app.authenticateUser.v1 import views
+from app.cryptoApi.v1 import views
 
 
 if __name__ == '__main__':

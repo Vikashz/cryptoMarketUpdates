@@ -5,6 +5,14 @@ from app.exceptions import ApiUserException
 
 
 def signup(json_data):
+    """
+    Creates new user if the user is not present in our system.
+    :param json_data: {"email":"vk@mailinator.com",
+                        "password":"lol123",
+                        "first_name": "Vikash",
+                        "last_name": "Kumar"}
+    :return: ObjectId in case of successfully creation else returns false
+    """
     user_emai = json_data.get("email", "")
     password = json_data.get("password", "")
     user_exists = mongo.api_user.find_one({"email": user_emai})
@@ -23,6 +31,12 @@ def signup(json_data):
 
 
 def login(email, password):
+    """
+    This method returns the access token once the user is identified as legitimate user.
+    :param email: "vk@mailinator.com"
+    :param password: "lol123"
+    :return: access token
+    """
     user_exists = mongo.api_user.find_one({"email": email})
     if user_exists:
         if check_password_hash(user_exists["password"], password):
@@ -32,4 +46,9 @@ def login(email, password):
 
 
 def issue_access_token_for_api_user(api_user):
+    """
+    This method issues access token for a user.
+    :param api_user: email of api_user
+    :return: returns access token
+    """
     return create_access_token(identity=api_user, expires_delta=datetime.timedelta(hours=24))
