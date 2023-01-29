@@ -6,8 +6,9 @@ def check_for_market_updates():
     calls API: https://api.bittrex.com/v3/markets for fetching the market updates
     :return: Json
     """
+    headers = {'Content-Type': 'application/json'}
     url = "https://api.bittrex.com/v3/markets"
-    res = requests.get(url)
+    res = requests.get(url, headers=headers)
     if res.status_code == 200:
         return res.json()
     return False
@@ -19,7 +20,8 @@ def check_for_market_summary():
     :return: json
     """
     url = "https://api.bittrex.com/v3/markets"
-    res = requests.get(url)
+    headers = {'Content-Type': 'application/json'}
+    res = requests.get(url, headers=headers)
     if res.status_code == 200:
         return res.json()
     return False
@@ -33,7 +35,8 @@ def check_for_market_summary_coin_wise(market_symbol):
     """
     if market_symbol:
         url = f"https://api.bittrex.com/v3/markets/{market_symbol}/summary"
-        res = requests.get(url)
+        headers = {'Content-Type': 'application/json'}
+        res = requests.get(url, headers=headers)
         if res.status_code == 200:
             return res.json()
     return False
