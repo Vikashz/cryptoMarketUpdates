@@ -35,3 +35,13 @@ def test_check_for_market_summary_coin_wise_with_incorrect_request():
     """
     res = b.check_for_market_summary_coin_wise("xyz-btc")
     assert isinstance(res, dict) == False
+
+
+def test_health():
+    res = b.health()
+    assert res["/market/<market_symbol>/summary"]["https://api.bittrex.com/v3/markets/<marketSymbol>/summary"] == "OK"
+    assert res["/market/<market_symbol>/summary"]["Version"] == "V1"
+    assert res["/market/summary"]["https://api.bittrex.com/v3/markets/summaries"] == "OK"
+    assert res["/market/summary"]["Version"] == "V1"
+    assert res["/market/updates"]["https://api.bittrex.com/v3/markets"] == "OK"
+    assert res["/market/updates"]["Version"] == "V1"

@@ -22,7 +22,9 @@ def populate_test_user(request):
     data = {"_id": ObjectId("63d643c25fe8b555a9da42b2"), "first_name": "Akash", "last_name": "Kumar",
             "email": "ak@mailinator.com",
             "password": "pbkdf2:sha256:260000$mzSxx8N5OdW4cprX$2d1c2acbf35193334a39f73fefe9c99f46fcd2273c9fb2ba91121b69a3d81ffd"}
-    mongo.api_user.insert_one(data)
+    user_exists = mongo.api_user.find_one({"_id": ObjectId("63d643c25fe8b555a9da42b2")})
+    if not user_exists:
+        mongo.api_user.insert_one(data)
 
     def tear_down():
         mongo.api_user.delete_one({'_id': ObjectId("63d643c25fe8b555a9da42b2")})

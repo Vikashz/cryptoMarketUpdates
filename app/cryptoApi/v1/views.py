@@ -58,3 +58,12 @@ def crypto_market_summary_coin_wise(market_symbol):
     except Exception as e:
         response = {"status": False, "message": "API error: " + str(e)}
     return jsonify(response), 500
+
+
+@app.route("/health")
+def health_status():
+    try:
+        response = b.health()
+        return jsonify(response), 200
+    except Exception as e:
+        return jsonify({"status": False, "message": "API error: " + str(e)}), 500

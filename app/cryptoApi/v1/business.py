@@ -19,7 +19,7 @@ def check_for_market_summary():
     calls API: https://api.bittrex.com/v3/markets/summaries for fetching the market summary
     :return: json
     """
-    url = "https://api.bittrex.com/v3/markets"
+    url = "https://api.bittrex.com/v3/markets/summaries"
     headers = {'Content-Type': 'application/json'}
     res = requests.get(url, headers=headers)
     if res.status_code == 200:
@@ -40,3 +40,19 @@ def check_for_market_summary_coin_wise(market_symbol):
         if res.status_code == 200:
             return res.json()
     return False
+
+
+def health():
+    status = {}
+    res = check_for_market_updates()
+    status["/market/updates"] = {"https://api.bittrex.com/v3/markets": "OK" if isinstance(res, list) else "DOWN",
+                                 "Version": "V1"}
+    res = check_for_market_summary()
+    status["/market/summary"] = {
+        "https://api.bittrex.com/v3/markets/summaries": "OK" if isinstance(res, list) else "DOWN",
+        "Version": "V1"}
+    res = check_for_market_summary_coin_wise("eth-btc")
+    status["/market/<market_symbol>/summary"] = {
+        "https://api.bittrex.com/v3/markets/<marketSymbol>/summary": "OK" if isinstance(res, dict) else "DOWN",
+        "Version": "V1"}
+    return status
