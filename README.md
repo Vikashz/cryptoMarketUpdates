@@ -26,4 +26,4 @@ APIs for fetching the cryptocurrency market price
 1) Unit tests with overall **72 %** coverage.
 Command for running the coverage: **coverage run -m pytest --disable-warnings app/tests** then **coverage html**
 2) Dockerfile for creating app image
-Command for running dockerfile **docker image build -t crypto_flask .** and for running the image docker run -p 5000:5000 -d **crypto_flask**
+Command for running dockerfile **docker image build -t crypto_flask .** and for running the image **docker run -p 5000:5000 -d crypto_flask**
